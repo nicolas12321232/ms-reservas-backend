@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: bd-reservas-dev
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: reservas_db
+    ports:
+      - "5434:5432" # Puerto Dev según tu diagrama
+    restart: unless-stopped
+
+  postgres-qa:
+    image: postgres:15-alpine
+    container_name: bd-reservas-qa
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: reservas_db
+    ports:
+      - "5433:5432" # Puerto QA según tu diagrama
+    restart: unless-stopped
+
+  postgres-main:
+    image: postgres:15-alpine
+    container_name: bd-reservas-main
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: tu_password_seguro_produccion
+      POSTGRES_DB: reservas_db
+    ports:
+      - "5432:5432" # Puerto Main (Producción)
+    restart: unless-stopped
+
+    # ... (aquí arriba están tus contenedores de bd-reservas-qa y bd-reservas-main)
+
+  ms-reservas-qa:
+    build: . # Construye usando el Dockerfile que acabamos de crear
+    container_name: ms-reservas-qa
+    ports:
+      - "9003:9003" # Suponiendo que QA use el puerto 9003
+    environment:
+      - SPRING_PROFILES_ACTIVE=qa # ¡Esto le dice que use application-qa.yml!
+    depends_on:
+      - postgres-qa
+
+  ms-reservas-main:
+    build: .
+    container_name: ms-reservas-main
+    ports:
+      - "9004:9004" # Suponiendo que MAIN use el puerto 9004
+    environment:
+      - SPRING_PROFILES_ACTIVE=main # ¡Esto le dice que use application-main.yml!
+    depends_on:
+      - postgres-main

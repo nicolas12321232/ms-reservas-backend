@@ -1,0 +1,13 @@
+server:
+  port: 9001
+
+spring:
+  datasource:
+    url: jdbc:jdbc:postgresql://bd-reservas-qa:5432/reservas_db
+    username: admin
+    password: password123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
