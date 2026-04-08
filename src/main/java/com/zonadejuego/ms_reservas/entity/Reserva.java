@@ -5,10 +5,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "reservas")
 public class Reserva {
+
+    // --- GETTERS Y SETTERS ---
 
     public Long getId() {
         return id;
@@ -82,11 +85,12 @@ public class Reserva {
         this.fechaCreacion = fechaCreacion;
     }
 
+   
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   
     @ManyToOne
     @JoinColumn(name = "cancha_id", nullable = false)
     private Cancha cancha;
@@ -95,12 +99,15 @@ public class Reserva {
     private String usuarioId;
 
     @Column(name = "fecha_reserva", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd") 
     private LocalDate fechaReserva;
 
     @Column(name = "hora_inicio", nullable = false)
+    @JsonFormat(pattern = "HH:mm") 
     private LocalTime horaInicio;
 
     @Column(name = "hora_fin", nullable = false)
+    @JsonFormat(pattern = "HH:mm") 
     private LocalTime horaFin;
 
     @Column(length = 20)
@@ -112,5 +119,4 @@ public class Reserva {
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
-    
 }

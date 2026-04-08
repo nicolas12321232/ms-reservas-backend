@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar archivos de configuración con credenciales
+**/application-dev.yml
+**/application-qa.yml
+**/application-main.yml
+
+# Ignorar carpetas de compilación
+target/
+.mvn/

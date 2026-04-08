@@ -14,13 +14,13 @@ public class DeporteController {
     @Autowired
     private DeporteService deporteService;
 
-    // Endpoint para ver los deportes: GET http://localhost:9002/api/deportes
+    //  GET http://localhost:9002/api/deportes
     @GetMapping
     public List<Deporte> listarDeportes() {
         return deporteService.obtenerTodos();
     }
 
-    // Endpoint para crear un deporte: POST http://localhost:9002/api/deportes
+    //  POST http://localhost:9002/api/deportes
     @PostMapping
     public Deporte crearDeporte(@RequestBody Deporte deporte) {
         return deporteService.guardarDeporte(deporte);
